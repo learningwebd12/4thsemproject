@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/stylesheet/dashboards.css">
+  <style>
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  
+
+  <div class="admin-header">
+      <p class="navbar-brand" >Admin Panel of Marketing Mandu</p>
+      <div class="container mt-3">
+        <% if (successMessage && successMessage.length > 0) { %>
+          <div class="alert alert-success"><%= successMessage %></div>
+        <% } %>
+      
+        <% if (errorMessage && errorMessage.length > 0) { %>
+          <div class="alert alert-danger"><%= errorMessage %></div>
+        <% } %>
+      </div>
+    <div class="ml-auto">
+      <a href="/admin/logout" class="btn btn-danger">Logout</a>
+    </div>
+  </div>
+
+  <div class="container mt-3">
+    <% if (successMessage && successMessage.length > 0) { %>
+      <div class="alert alert-success"><%= successMessage %></div>
+    <% } %>
+  
+    <% if (errorMessage && errorMessage.length > 0) { %>
+      <div class="alert alert-danger"><%= errorMessage %></div>
+    <% } %>
+  </div>
+
+  <div class="main-content">
+    <div class="sidebar">
+      <a href="#" id="btnServices">Services</a>
+      <a href="#" id="btnCategory">Category</a>
+      <a href="#" id="btnContacts">Contacts</a>
+      <a href="#" id="btnBookings">Bookings</a>
+      
+      
+    </div>
+  
+    <!-- Main Content -->
+    <div class="content">
+     
+      
+      
+      <div id="servicesSection">
+        <h2>Services</h2>
+        <a href="/admin/add-service" class="btn btn-primary">Add New Service</a>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Service Name</th>
+              <th>Category</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% services.forEach(service => { %>
+              <tr>
+                <td><%= service.name %></td>
+                <td><%= service.category ? service.category.name : 'N/A' %></td>
+                <td><%= service.description %></td>
+                <td><%= service.price %></td>
+                <td>
+                  <a href="/admin/edit/<%= service._id %>" class="btn btn-primary btn-sm">Edit</a>
+                  <form action="/admin/delete-service/<%= service._id %>" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirmDelete();">
+                      Delete
+                    </button>
+                    
+                  </form>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+  
+      <div id="categorySection" class="hidden">
+        <h2>Categories</h2>
+        <a href="/admin/add-category" class="btn btn-primary">Add Category</a>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Category Name</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% categories.forEach(category => { %>
+              <tr>
+                <td><%= category.name %></td>
+                <td>
+                  <a href="/admin/edit-category/<%= category._id %>" class="btn btn-warning">Edit</a>
+                  <form action="/admin/delete-category/<%= category._id %>" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                  </form>
+                  
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+      
+      <div id="contactsSection" class="hidden">
+        <h2>Contact Messages</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Message</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% contacts.forEach(contact => { %>
+              <tr>
+                <td><%= contact.name %></td>
+                <td><%= contact.email %></td>
+                <td><%= contact.phone %></td>
+                <td><%= contact.message %></td>
+                <td><%= contact.createdAt ? contact.createdAt.toLocaleString() : 'N/A' %></td>
+                <td>
+                  <a href="mailto:<%= contact.email %>?subject=Reply to Your Message&body=Hi <%= contact.name %>,%0D%0A%0D%0AThank you for reaching out. Here is our response to your message:%0D%0A%0D%0A<%= contact.message %>%0D%0A%0D%0ARegards,%0D%0A[Your Company Name]" class="btn btn-primary btn-sm">Reply via Email</a>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+  
+      <div id="bookingsSection" class="hidden">
+        <h2>Bookings</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>User Full Name</th>
+              <th>User Email</th>
+              <th>Service</th>
+              <th>Price</th>
+              <th>Booking Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% bookings.forEach(booking => { %>
+              <tr>
+                <td><%= booking.user ? booking.user.fullname : 'N/A' %></td>
+                <td><%= booking.user ? booking.user.email : 'N/A' %></td>
+                <td><%= booking.service ? booking.service.name : 'N/A' %></td>
+                <td>
+                  <%= booking.service ? `$${booking.service.price.toFixed(2)}` : 'N/A' %>
+                </td>
+                <td><%= booking.bookingDate ? booking.bookingDate.toLocaleDateString() : 'N/A' %></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+ 
+  
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  function hideAllSections() {
+    document.querySelectorAll(".content > div").forEach(section => {
+      section.classList.add("hidden");
+    });
+  }
+
+  function showSection(sectionId) {
+    hideAllSections();
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.classList.remove("hidden");
+    }
+  }
+
+  // Show services by default on page load
+  showSection("servicesSection");
+
+  document.querySelectorAll(".sidebar a").forEach(button => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const sectionId = button.id.replace("btn", "").toLowerCase() + "Section";
+      showSection(sectionId);
+    });
+  });
+});
+
+
+  </script>
+
+</body>
+</html>

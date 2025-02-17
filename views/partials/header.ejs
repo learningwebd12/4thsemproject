@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Website</title>
+  <style>
+   @font-face {
+    font-family: navbar;
+    src: url("/fonts/Geliat-ExtraBold.otf");
+   }
+    nav {
+     
+    }
+
+    nav a {
+      float: left;
+      display: block;
+      color: #f2f2f2;
+      text-align: center;
+      margin: 0.5vw 1vw;
+      text-decoration: none;
+      font-size: 1vw;
+      font-weight: 700;
+    }
+    header{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 999;
+      overflow: hidden;
+      background-color: #000000;
+      padding: 1vw 0.5vw;
+      font-family: poppins;
+
+    }
+    .login-btn{
+      text-decoration:none ;
+      cursor: pointer;
+    font-family: poppins;
+    font-size: 1vw;
+    padding: 1.1vw 2vw;
+    border-radius: 10vw;
+    outline: none;
+    border: none;
+    color: #fff;
+    }
+    .register-btn{
+      text-decoration: none;
+      cursor: pointer;
+    font-family: poppins;
+    font-size: 1vw;
+    padding: 1.1vw 2vw;
+    border-radius: 10vw;
+    outline: none;
+    border: none;
+    color: #fff;
+    background:linear-gradient(rgb(76, 117, 255) 0%, rgb(26, 79, 255) 100%)
+ 
+    }
+
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="logo" style="color: white;">MM</div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/services">Services</a>
+      <a href="/contact">Get in Touch</a>
+     
+    </nav>
+    <div>
+      <% if (userLoggedIn) { %>
+        <a href="/auth/logout" class="logout-btn">Logout</a>
+      <% } else { %>
+        <a href="/auth/login" class="login-btn">Login</a>
+        <a href="/auth/register" class="register-btn">Register</a>
+      <% } %>
+    </div>
+  </header>
+  
+
+</body>
+</html>

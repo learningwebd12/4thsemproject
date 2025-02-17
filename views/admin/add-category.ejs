@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Category</title>
+  <link rel="stylesheet" href="/stylesheet/admin.css">
+</head>
+<body>
+
+<h1>Add Category</h1>
+
+<% if (successMessage) { %>
+  <div class="alert alert-success"><%= successMessage %></div>
+<% } %>
+<% if (errorMessage) { %>
+  <div class="alert alert-danger"><%= errorMessage %></div>
+<% } %>
+
+<form action="/admin/add-category" method="post">
+  <div class="form-group">
+    <label for="name">Category Name:</label>
+    <input type="text" name="name" id="name" class="form-control" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Add Category</button>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Login</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
+<link rel="stylesheet" href="../stylesheet/login.css">
+</head>
+<body>
+  <div class="main-login">
+    <h1 style="text-align: center;">Login</h1>
+  <p style="text-align: center;">Welcome Back</p>
+  <form action="/auth/login" method="POST">
+    <div class="user-login">
+      <i class="ri-shield-user-fill"></i>
+    <input type="email" name="email" placeholder="Email" required>
+    </div>
+    <div class="user-login">
+      <i class="ri-lock-password-line"></i>
+    <input type="password" name="password" placeholder="Password" required>
+    </div>
+    <div class="login-register">
+      <button type="submit" class="login-btn">Login</button>
+    <a href="/auth/register" class="register">Don't have an account? Register</a>
+    </div>
+  </form>
+  
+  </div>
+</body>
+</html>

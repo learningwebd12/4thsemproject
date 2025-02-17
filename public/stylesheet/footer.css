@@ -1,0 +1,87 @@
+@font-face {
+    font-family: minigap;
+    src: url("../fonts/Gravitype\ -\ Minigap.otf");
+}
+footer {
+    background: #222;
+    color: white;
+    width: 100%;
+    padding: 2vw 0 0 0;
+    
+  }
+  
+  .footer-container {
+    display: flex;
+    gap: 1vw;
+    justify-content: space-between;
+    align-items: stretch;
+
+  }
+  .three-box{
+    width: 100%;
+    padding: 2vw 0;
+  }
+  .footer-about h3{
+    font-family: minigap;
+    font-size: 1.5vw;
+    margin: 1vw 0;
+  }
+  .footer-about {
+    font-family: minigap;
+    font-size: 1vw;
+  }
+  .footer-about, .footer-links {
+    width: 45%;
+    text-align: left;
+  }
+  
+  .footer-links ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-links ul li {
+    margin: 0.3vw 0;
+  }
+  .three-box{
+    width: 25%;
+    padding: 1vw;
+    text-align: start;
+  }
+.footer-info h3{
+    font-family: minigap;
+    font-size: 1.5vw;
+    margin: 1vw 0;
+}
+  .footer-info p{
+font-family: minigap;
+margin: 0.3vw 0;
+  }
+  .footer-links ul li a {
+    color: white;
+    text-decoration: none;
+    font-family: minigap;
+    font-family: 1vw;
+  }
+  .footer-links h3{
+    font-size: 1.5vw;
+    margin: 1vw 0;
+    font-family: minigap;
+  }
+  
+  .footer-links ul li a:hover {
+    text-decoration: underline;
+  }
+  
+
+  .copyright{
+    padding: 1.5vw 0;
+    background-color: #00000028;
+    text-align: center;
+    padding: 2vw;
+  }
+  .copyright p{
+    font-family: minigap;
+    font-size: 1vw;
+    color: #ffffff71;
+  }

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Available Services</title>
+  <link rel="stylesheet" href="/stylesheet/services.css">
+  <style>
+    .alert {
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+    }
+    .alert-success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      position: absolute;
+      top: 4vw;
+      right: 3vw;
+    }
+    .alert-danger {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+  </style>
+</head>
+<body>
+  <%- include('partials/header') %> 
+
+  <!-- ✅ Flash Messages -->
+  <% if (successMessage.length > 0) { %>
+    <div class="alert alert-success" id="successMessage"><%= successMessage %></div>
+  <% } %>
+
+  <% if (errorMessage.length > 0) { %>
+    <div class="alert alert-danger" id="errorMessage"><%= errorMessage %></div>
+  <% } %>
+
+  <h1>Available Services</h1>
+  <ul>
+    <% services.forEach(service => { %> 
+      <li>
+        <h2><%= service.name %></h2>
+        <p><%= service.description %></p>
+        <p>Price: $<%= service.price %></p>
+        <form action="/services/book-service/<%= service._id %>" method="POST">
+          <button type="submit">Book Now</button>
+        </form>
+      </li>
+    <% }) %>
+  </ul>
+
+  <script>
+    // Auto-hide flash messages after 5 seconds
+    setTimeout(() => {
+      const successMessage = document.getElementById("successMessage");
+      const errorMessage = document.getElementById("errorMessage");
+
+      if (successMessage) {
+        successMessage.style.transition = "opacity 0.5s";
+        successMessage.style.opacity = "0";
+        setTimeout(() => successMessage.remove(), 500);
+      }
+
+      if (errorMessage) {
+        errorMessage.style.transition = "opacity 0.5s";
+        errorMessage.style.opacity = "0";
+        setTimeout(() => errorMessage.remove(), 500);
+      }
+    }, 5000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/stylesheet/dashboards.css">
+</head>
+<body>
+
+  <div class="container">
+    <h2>Edit Service</h2>
+
+    <% if (successMessage) { %>
+      <div class="alert alert-success"><%= successMessage %></div>
+    <% } %>
+
+    <% if (errorMessage) { %>
+      <div class="alert alert-danger"><%= errorMessage %></div>
+    <% } %>
+
+    <form action="/admin/edit/<%= service._id %>" method="POST">
+      <div class="mb-3">
+        <label for="name" class="form-label">Service Name</label>
+        <input type="text" name="name" id="name" class="form-control" value="<%= service.name %>" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select name="category" id="category" class="form-control" required>
+          <% categories.forEach(category => { %>
+            <option value="<%= category._id %>" <%= service.category && service.category._id == category._id ? 'selected' : '' %>>
+              <%= category.name %>
+            </option>
+          <% }); %>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="description" id="description" class="form-control" required><%= service.description %></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="price" class="form-label">Price</label>
+        <input type="number" name="price" id="price" class="form-control" value="<%= service.price %>" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Update Service</button>
+      <a href="/admin" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+
+</body>
+</html>

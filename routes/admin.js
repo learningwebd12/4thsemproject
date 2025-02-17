@@ -1,0 +1,223 @@
+const express = require("express");
+const router = express.Router();
+const Service = require("../models/service.model");
+const Contact = require("../models/contact.model");
+const Booking = require("../models/booking.model");
+const ServiceCategory = require("../models/ServiceCategory.model");
+
+const isAdminAuthenticated = (req, res, next) => {
+  if (req.session.isAuthenticated && req.session.admin) {
+    return next();
+  }
+  req.flash("error", "Please log in as admin.");
+  res.redirect("/admin/auth/login");
+};
+
+// ✅ Admin Dashboard
+router.get("/", isAdminAuthenticated, async (req, res) => {
+  try {
+    const services = await Service.find().populate("category");
+    const contacts = await Contact.find();
+    const bookings = await Booking.find().populate("service").populate("user");
+    const categories = await ServiceCategory.find();
+
+    res.render("admin/dashboard", {
+      services,
+      contacts,
+      bookings,
+      categories,
+      successMessage: req.flash("success"),
+      errorMessage: req.flash("error"),
+    });
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Failed to load data.");
+    res.redirect("/admin");
+  }
+});
+
+// ✅ Render Add Category Form
+router.get("/add-category", isAdminAuthenticated, (req, res) => {
+  res.render("admin/add-category", { messages: req.flash() });
+});
+
+router.post("/add-category", isAdminAuthenticated, async (req, res) => {
+  const { name } = req.body;
+  if (!name) {
+    req.flash("error", "Please enter a category name.");
+    return res.redirect("/admin/add-category");
+  }
+
+  try {
+    const newCategory = new ServiceCategory({ name });
+    await newCategory.save();
+    req.flash("success", "Category added successfully.");
+    res.redirect("/admin/add-category");
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Failed to add category.");
+    res.redirect("/admin/add-category");
+  }
+});
+
+// ✅ Edit Category Form
+router.get("/edit-category/:id", isAdminAuthenticated, async (req, res) => {
+  try {
+    const category = await ServiceCategory.findById(req.params.id);
+    if (!category) {
+      req.flash("error", "Category not found.");
+      return res.redirect("/admin");
+    }
+    res.render("admin/edit-category", { category });
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Failed to load category for editing.");
+    res.redirect("/admin");
+  }
+});
+
+// ✅ Update Category
+router.post("/edit-category/:id", isAdminAuthenticated, async (req, res) => {
+  const { name } = req.body;
+  if (!name) {
+    req.flash("error", "Please enter a category name.");
+    return res.redirect(`/admin/edit-category/${req.params.id}`);
+  }
+
+  try {
+    await ServiceCategory.findByIdAndUpdate(req.params.id, { name });
+
+    req.flash("success", "Category updated successfully.");
+    res.redirect(`/admin/edit-category/${req.params.id}`);
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Failed to update category.");
+    res.redirect(`/admin/edit-category/${req.params.id}`);
+  }
+});
+
+// ✅ Delete Category
+router.post("/delete-category/:id", isAdminAuthenticated, async (req, res) => {
+  try {
+    await ServiceCategory.findByIdAndDelete(req.params.id);
+    req.flash("success", "Category deleted successfully.");
+    res.redirect("/admin");
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Failed to delete category.");
+    res.redirect("/admin");
+  }
+});
+
+// ✅ Render Add Service Form
+router.get("/add-service", isAdminAuthenticated, async (req, res) => {
+  try {
+    const categories = await ServiceCategory.find();
+    res.render("admin/add-service", { categories });
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Failed to load categories.");
+    res.redirect("/admin/services");
+  }
+});
+
+// ✅ Add Service
+router.post("/add-service", isAdminAuthenticated, async (req, res) => {
+  const { name, category, description, price } = req.body;
+
+  try {
+    const newService = new Service({ name, category, description, price });
+    await newService.save();
+    req.flash("success", "Service added successfully.");
+    res.redirect("/admin/add-service");
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Failed to add service.");
+    res.redirect("/admin/add-service");
+  }
+});
+
+// ✅ View Services
+router.get("/services", isAdminAuthenticated, async (req, res) => {
+  try {
+    const services = await Service.find().populate("category");
+    res.render("admin/services", { services });
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Failed to retrieve services.");
+    res.redirect("/admin");
+  }
+});
+
+// ✅ Edit Service Form
+router.get("/edit/:id", isAdminAuthenticated, async (req, res) => {
+  try {
+    const service = await Service.findById(req.params.id).populate("category");
+    const categories = await ServiceCategory.find();
+    if (!service) {
+      req.flash("error", "Service not found.");
+      return res.redirect("/admin/services");
+    }
+
+    res.render("admin/edit-service", { service, categories });
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Failed to load service for editing.");
+    res.redirect("/admin/services");
+  }
+});
+
+// ✅ Update Service
+router.post("/edit/:id", isAdminAuthenticated, async (req, res) => {
+  const { name, category, description, price } = req.body;
+
+  try {
+    await Service.findByIdAndUpdate(req.params.id, {
+      name,
+      category,
+      description,
+      price,
+    });
+
+    req.flash("success", "Service updated successfully.");
+    res.redirect(`/admin/edit/${req.params.id}`);
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Failed to update service.");
+    res.redirect(`/admin/edit/${req.params.id}`);
+  }
+});
+
+// ✅ Delete Service
+router.post("/delete-service/:id", isAdminAuthenticated, async (req, res) => {
+  try {
+    await Service.findByIdAndDelete(req.params.id);
+    req.flash("success", "Service deleted successfully.");
+    res.redirect("/admin");
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Failed to delete service.");
+    res.redirect("/admin");
+  }
+});
+
+// ✅ Fetch Bookings for Admin Dashboard
+router.get("/bookings", isAdminAuthenticated, async (req, res) => {
+  try {
+    const bookings = await Booking.find()
+      .populate("user", "fullname email")
+      .populate("service", "name price");
+
+    const services = await Service.find().populate("category");
+    const contacts = await Contact.find();
+    const categories = await ServiceCategory.find();
+
+    res.render("admin/dashboard", { services, contacts, bookings, categories });
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Failed to retrieve bookings.");
+    res.redirect("/admin");
+  }
+});
+
+module.exports = router;

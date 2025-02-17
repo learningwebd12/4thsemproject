@@ -1,0 +1,108 @@
+body {
+
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  .admin-header{
+    background-color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1vw 3vw;
+  }
+  .navbar-brand{
+    color: #dc3545;
+  }
+
+  .main-content{
+    display: flex;
+  }
+  .sidebar {
+    width: 250px;
+    background: #333;
+    color: #fff;
+    padding: 20px;
+    height: 100vh;
+    box-sizing: border-box;
+  }
+  .sidebar a {
+    display: block;
+    color: #fff;
+    padding: 10px;
+    text-decoration: none;
+    margin-bottom: 5px;
+    border-radius: 5px;
+  }
+  .sidebar a:hover {
+    background: #575757;
+  }
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+  .hidden {
+    display: none;
+  }
+
+
+  
+  h1, h2 {
+    margin-bottom: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  th {
+    text-align: left;
+  }
+  
+  /* Alerts */
+  .alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+  }
+  
+  .alert-success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #468847;
+  }
+  
+  .alert-danger {
+    background-color: #f2dede;
+    border-color: #e4b9b9;
+    color: #a94442;
+  }
+  
+  /* Buttons */
+  .btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  /* Tables */
+  .table > thead > tr > th {
+    background-color: #f5f5f5;
+  }

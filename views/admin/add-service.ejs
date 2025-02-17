@@ -1,0 +1,109 @@
+<h2>Add Service</h2>
+
+<!-- Success & Error Messages -->
+<% if (successMessage.length > 0) { %>
+  <div class="alert alert-success" id="successMessage"><%= successMessage %></div>
+<% } %>
+<% if (errorMessage.length > 0) { %>
+  <div class="alert alert-danger" id="errorMessage"><%= errorMessage %></div>
+<% } %>
+
+<form action="/admin/add-service" method="post" class="service-form">
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name" class="form-control" required>
+  </div>
+
+  <div class="form-group">
+    <label for="category">Category:</label>
+    <select name="category" id="category" class="form-control" required>
+      <% categories.forEach(category => { %>
+        <option value="<%= category._id %>"><%= category.name %></option>
+      <% }); %>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description:</label>
+    <textarea name="description" id="description" class="form-control" rows="3" required></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="price">Price:</label>
+    <input type="number" name="price" id="price" class="form-control" min="0" required>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Add Service</button>
+</form>
+
+<style>
+  .service-form {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  label {
+    font-weight: bold;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  .btn-primary {
+    width: 100%;
+    background: #007bff;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+  }
+
+  .btn-primary:hover {
+    background: #0056b3;
+  }
+
+  .alert {
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .alert-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+
+  .alert-danger {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+</style>
+
+<script>
+  // Auto-hide alert messages after 5 seconds
+  setTimeout(() => {
+    const successMessage = document.getElementById("successMessage");
+    const errorMessage = document.getElementById("errorMessage");
+
+    if (successMessage) successMessage.style.display = "none";
+    if (errorMessage) errorMessage.style.display = "none";
+  }, 5000);
+</script>
