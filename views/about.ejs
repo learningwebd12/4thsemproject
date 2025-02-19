@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../stylesheet/about.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+    <div class="header-images">
+        <h1 class="header-text-h1">About us</h1>
+    
+        <div class="two-link"><a href="/" class="home-link">Home</a> <span class="arrow-span">></span> <p class="services-link">About us</p></div>
+    
+       </div>
+    <h1>About Us</h1>
+    <% if (aboutData) { %>
+        <h2><%= aboutData.name %></h2>
+        <p><%= aboutData.description %></p>
+    <% } else { %>
+        <p>No About Us content available.</p>
+    <% } %>
+    <%- include('partials/footer') %> 
+</body>
+</html>

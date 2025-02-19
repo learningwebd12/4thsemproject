@@ -8,32 +8,41 @@
 </head>
 <body>
 
-  <%- include('partials/header') %> 
+  <%- include('partials/header') %>
+   <div class="header-images">
+    <h1 class="header-text-h1">Contact</h1>
+
+    <div class="two-link"><a href="/" class="home-link">Home</a> <span class="arrow-span">></span> <p class="services-link">Contact</p></div>
+
+   </div>
 <section class="contact-us-section">
   <div class="contact-text">
     <p class="contact-us-text">Contact us</p>
-    <h1 class="contact-h1">Get in Touch: We're Here to Answer Your Questions</h1>
+    <h1 class="contact-h1">Get in Touch: <span class="contact-span">
+      We're Here to Answer Your Questions
+    </span></h1>
   </div>
+
 <form action="/contact" method="POST">
   <div class="form-group">
     <label for="name">Name</label>
-    <input type="text" id="name" name="name" class="form-control" required>
+    <input type="text" id="name" name="name" class="form-control" required placeholder="Fulll Name">
   </div>
   <div class="form-group">
     <label for="email">Email</label>
-    <input type="email" id="email" name="email" class="form-control" required>
+    <input type="email" id="email" name="email" class="form-control" required placeholder="Email">
   </div>
   <div class="form-group">
     <label for="phone">Phone</label>
-    <input type="tel" id="phone" name="phone" class="form-control" required>
+    <input type="tel" id="phone" name="phone" class="form-control" required placeholder="Phone">
   </div>
   <div class="form-group">
     <label for="message">Message</label>
-    <textarea id="message" name="message" rows="5" class="form-control" required></textarea>
+    <textarea id="message" name="message" rows="5" class="textarea" required placeholder="Message"></textarea>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-
 </section>
+   <%- include('partials/footer') %> 
 </body>
 </html>

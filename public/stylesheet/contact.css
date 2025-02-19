@@ -3,3 +3,125 @@
     padding: 0;
     box-sizing: border-box;
 }
+@font-face {
+    font-family:minigap;
+    src: url("../fonts/Gravitype\ -\ Minigap.otf");
+}
+.contact-us-section{
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    width: 100%;
+    height: 100vh;
+    background:url("../images/404-bg.png");
+    background-size: cover;
+    padding: 2vw 0 0 0;
+}
+
+.header-images{
+    width: 100%;
+    height: 25vw;
+    position: relative;
+    background:url("../images/inner-about.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+.header-images::before{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    content: "";
+    background: rgba(0, 0, 0, 0.7);
+}
+.header-text-h1{
+    color: #fff;
+    position: absolute;
+    top: 40%;
+    right: 45%;
+    font-family: minigap;
+    font-size: 2.5vw;
+}
+.two-link{
+    color: #fff;
+    position: absolute;
+    top: 55%;
+    right: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: minigap;
+}
+.home-link{
+    text-decoration: none;
+    color: #fff;
+}
+.arrow-span{
+    margin: 0 0.5vw;
+}
+.services-link{
+    color: #bdbdbd;
+}
+
+.contact-us-text{
+    font-family: minigap;
+    font-size: 1.5vw;
+}
+.contact-h1{
+font-family: minigap;
+font-size: 4vw;
+}
+.contact-span{
+    color:#03185e ;
+}
+.contact-text{
+    width: 50%;
+    padding: 1vw;
+}
+form{
+font-family: minigap;
+    width: 50%;
+    padding: 1vw;
+}
+label{
+    font-size: 1vw;
+    margin: 0.7vw 0;
+}
+.form-group{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+.form-control{
+    padding: 1vw;
+    border-radius: 0.4vw;
+    font-family: minigap;
+    font-size: 1vw;
+    outline: none;
+    background-color: #fff;
+    border: 0.1vw solid #1716167c;
+    
+}
+textarea{
+    padding: 1vw;
+    border-radius: 0.4vw;
+    outline: none;
+    font-size: 1vw;
+    font-family: minigap;
+}
+.btn-primary{
+    margin: 1vw 0;
+    cursor: pointer;
+    font-family: poppins;
+    font-size: 1.2vw;
+    padding: 1.1vw 3vw;
+    border-radius: 0.5vw;
+    outline: none;
+    border: none;
+    color: #fff;
+  background:linear-gradient(rgb(76, 117, 255) 0%, #1a4fff 100%);
+}

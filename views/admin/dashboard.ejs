@@ -46,6 +46,8 @@
       <a href="#" id="btnCategory">Category</a>
       <a href="#" id="btnContacts">Contacts</a>
       <a href="#" id="btnBookings">Bookings</a>
+      <a href="#" id="btnAboutus">About us</a>
+
       
       
     </div>
@@ -117,6 +119,44 @@
         </table>
       </div>
       
+<!-- about us page -->
+
+<div id="aboutusSection" class="hidden">
+  <h2>About Us</h2>
+  <a href="/admin/add-about" class="btn btn-primary">Add About</a>
+  <% if (aboutData) { %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% aboutData.forEach(about => { %>
+          <tr>
+            <td><%= about.name %></td>
+            <td><%= about.description %></td>
+            <td>
+              <!-- Edit Button -->
+              <a href="/admin/about/edit/<%= about._id %>" class="btn btn-warning btn-sm">Edit</a>
+              
+              <!-- Delete Button -->
+              <form action="/admin/about/delete/<%= about._id %>" method="POST" style="display:inline;">
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this?');">Delete</button>
+              </form>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>No About Us content added yet.</p>
+  <% } %>
+</div>
+
+
       <div id="contactsSection" class="hidden">
         <h2>Contact Messages</h2>
         <table class="table">

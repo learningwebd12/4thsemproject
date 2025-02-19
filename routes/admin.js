@@ -4,6 +4,7 @@ const Service = require("../models/service.model");
 const Contact = require("../models/contact.model");
 const Booking = require("../models/booking.model");
 const ServiceCategory = require("../models/ServiceCategory.model");
+const About = require("../models/about.model");
 
 const isAdminAuthenticated = (req, res, next) => {
   if (req.session.isAuthenticated && req.session.admin) {
@@ -20,12 +21,14 @@ router.get("/", isAdminAuthenticated, async (req, res) => {
     const contacts = await Contact.find();
     const bookings = await Booking.find().populate("service").populate("user");
     const categories = await ServiceCategory.find();
+    const aboutData = await About.findOne();
 
     res.render("admin/dashboard", {
       services,
       contacts,
       bookings,
       categories,
+      aboutData,
       successMessage: req.flash("success"),
       errorMessage: req.flash("error"),
     });
@@ -198,6 +201,55 @@ router.post("/delete-service/:id", isAdminAuthenticated, async (req, res) => {
     console.error(err);
     req.flash("error", "Failed to delete service.");
     res.redirect("/admin");
+  }
+});
+
+// about us page
+router.get("/add-about", async (req, res) => {
+  try {
+    const aboutData = await About.findOne(); // Fetch existing data
+    res.render("admin/add-about", { aboutData });
+  } catch (error) {
+    console.error(error);
+    res.render("admin/add-about", {
+      aboutData: null,
+      errorMessage: "Failed to load About Us form.",
+    });
+  }
+});
+// ✅ Frontend: Show About Us Page
+router.get("/about", async (req, res) => {
+  try {
+    const aboutData = await About.findOne(); // Fetch About Us data
+    res.render("about", { aboutData });
+  } catch (error) {
+    console.error(error);
+    res.render("about", {
+      aboutData: null,
+      errorMessage: "Failed to load About Us page.",
+    });
+  }
+});
+
+router.post("/add-about", isAdminAuthenticated, async (req, res) => {
+  try {
+    const { name, description } = req.body;
+    let about = await About.findOne();
+
+    if (!about) {
+      about = new About({ name, description });
+    } else {
+      about.name = name;
+      about.description = description;
+    }
+
+    await about.save();
+    req.flash("success", "About Us updated successfully.");
+    res.redirect("/admin/add-about");
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Failed to update About Us.");
+    res.redirect("/admin/add-about");
   }
 });
 

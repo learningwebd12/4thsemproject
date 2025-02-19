@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin - About Us</title>
+</head>
+<body>
+    <h1>About Us</h1>
+    <form action="/admin/add-about" method="POST">
+        <label>Name:</label>
+        <input type="text" name="name" value="<%= aboutData ? aboutData.name : '' %>" required>
+
+        <label>Description:</label>
+        <textarea name="description" required><%= aboutData ? aboutData.description : '' %></textarea>
+
+        <button type="submit">Update</button>
+    </form>
+
+    <% if (successMessage) { %>
+        <p style="color: green;"><%= successMessage %></p>
+    <% } %>
+    <% if (errorMessage) { %>
+        <p style="color: red;"><%= errorMessage %></p>
+    <% } %>
+</body>
+</html>

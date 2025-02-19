@@ -3,6 +3,10 @@
     padding: 0;
     box-sizing: border-box;
 }
+@font-face {
+    font-family: minigap;
+    src: url("../fonts/Gravitype\ -\ Minigap.otf");
+}
 
 .home-page{
     width: 100%;
@@ -80,3 +84,82 @@
        width: 100%; 
 }
 
+
+
+
+/* why-choose-us */
+
+.why-choose-us{
+    padding: 2vw 0;
+    width: 100%;
+    background:url("../images/404-bg.png") ;
+}
+.two-main-choose-us{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+.fist-box-choose{
+    padding: 0 0 0 4vw;
+    width: 60%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1.5vw;
+}
+.inner-first-choose{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+    border-radius: 1vw;
+    background-color: #fff;
+    padding: 1vw;
+}
+.first-images{
+    width: 100%;
+  display: flex;
+  height: 25vw;
+  object-fit: cover;
+  border-radius: 1vw;
+    
+}
+.second-box-choose{
+    width: 45%;
+    display: flex;
+    justify-content: end;
+    align-items:center;
+    padding:0 3vw 0 0;
+   
+}
+.second-images{
+  width: 75%;
+    height: 52vw;
+    object-fit: cover;
+    border-radius: 1vw;
+   
+}
+
+.sm-text{
+    font-family: minigap;
+}
+.sm-h1{
+    font-size: 5vw;
+    font-family: minigap;
+}
+.sm-pasag{
+    font-family: minigap;
+    font-size: 1vw;
+}
+.two-why-choose-us{
+    padding: 1vw 2vw;
+}
+.choose-us{
+    font-family: minigap;
+    font-size: 1vw;
+}
+.why-choose-h1{
+    font-family: minigap;
+    font-size: 3vw;
+}
