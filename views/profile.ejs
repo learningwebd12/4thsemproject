@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../stylesheet/profile.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+
+<div class="header-images">
+  <h1 class="header-text-h1">User Profile</h1>
+  <div class="two-link">
+    <a href="/" class="home-link">Home</a> 
+    <span class="arrow-span">></span> 
+    <p class="services-link">User Profile</p>
+  </div>
+</div>
+
+<!-- Flash Messages -->
+<% if (successMessage.length > 0) { %>
+  <p class="success-message"><%= successMessage %></p>
+<% } %>
+<% if (errorMessage.length > 0) { %>
+  <p class="error-message"><%= errorMessage %></p>
+<% } %>
+
+<h2>User Profile</h2>
+
+<p><strong>Name:</strong> <%= user.fullname %></p>
+<p><strong>Email:</strong> <%= user.email %></p>
+
+<h2>Your Bookings</h2>
+<% if (bookings.length > 0) { %>
+    <ul>
+        <% bookings.forEach(booking => { %>
+            <li>
+                <strong>Service:</strong> 
+                <% if (booking.service) { %>
+                    <%= booking.service.name %>
+                <% } else { %>
+                    <em>Service not available</em>
+                <% } %>
+                <br>
+                <strong>Booking Date:</strong> <%= new Date(booking.bookingDate).toDateString() %>
+
+                <!-- Cancel Button -->
+                <form action="/user/cancel-booking/<%= booking._id %>" method="POST" style="display:inline;">
+                    <button type="submit" onclick="return confirm('Are you sure you want to cancel this service?');">
+                        Cancel Booking
+                    </button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+<% } else { %>
+    <p>No bookings yet.</p>
+<% } %>
+
+
+  <script>
+    // Auto-hide flash messages after 5 seconds
+    setTimeout(() => {
+      const successMessage = document.getElementById("successMessage");
+      const errorMessage = document.getElementById("errorMessage");
+
+      if (successMessage) {
+        successMessage.style.transition = "opacity 0.5s";
+        successMessage.style.opacity = "0";
+        setTimeout(() => successMessage.remove(), 500);
+      }
+
+      if (errorMessage) {
+        errorMessage.style.transition = "opacity 0.5s";
+        errorMessage.style.opacity = "0";
+        setTimeout(() => errorMessage.remove(), 500);
+      }
+    }, 5000);
+  
+</script>
+
+
+
+<%- include('partials/footer') %> 
+
+</body>
+</html>

@@ -21,7 +21,7 @@ router.get("/", isAdminAuthenticated, async (req, res) => {
     const contacts = await Contact.find();
     const bookings = await Booking.find().populate("service").populate("user");
     const categories = await ServiceCategory.find();
-    const aboutData = await About.findOne();
+    const aboutData = await About.find();
 
     res.render("admin/dashboard", {
       services,
@@ -207,7 +207,7 @@ router.post("/delete-service/:id", isAdminAuthenticated, async (req, res) => {
 // about us page
 router.get("/add-about", async (req, res) => {
   try {
-    const aboutData = await About.findOne(); // Fetch existing data
+    const aboutData = await About.find(); // Fetch existing data
     res.render("admin/add-about", { aboutData });
   } catch (error) {
     console.error(error);

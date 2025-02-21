@@ -52,7 +52,7 @@ router.post("/login", async (req, res) => {
       return res.redirect("/auth/login");
     }
 
-    const isMatch = await bcrypt.compare(password, user.password); 
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       req.flash("error", "Invalid email or password.");
       return res.redirect("/auth/login");
@@ -61,7 +61,7 @@ router.post("/login", async (req, res) => {
     req.session.isAuthenticated = true;
     req.session.user = user;
     req.flash("success", "Login successful.");
-    res.redirect("/"); 
+    res.redirect("/");
   } catch (err) {
     console.error(err);
     req.flash("error", "Error during login.");

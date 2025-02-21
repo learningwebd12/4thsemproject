@@ -59,6 +59,7 @@ const adminOtpAuthRoutes = require("./routes/adminOtpAuth");
 const serviceRoutes = require("./routes/services");
 const contactRouter = require("./routes/contact");
 const aboutRoutes = require("./routes/about");
+const userRoutes = require("./routes/user");
 
 // Use Routes
 app.use("/auth", authRoutes);
@@ -67,6 +68,7 @@ app.use("/admin/auth", adminOtpAuthRoutes);
 app.use("/services", serviceRoutes);
 app.use("/contact", contactRouter);
 app.use("/", aboutRoutes);
+app.use("/user", userRoutes);
 
 // Home Route
 app.get("/", (req, res) => {

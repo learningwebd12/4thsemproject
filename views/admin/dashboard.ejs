@@ -120,11 +120,11 @@
       </div>
       
 <!-- about us page -->
-
-<div id="aboutusSection" class="hidden">
+<div id="aboutusSection">
   <h2>About Us</h2>
-  <a href="/admin/add-about" class="btn btn-primary">Add About</a>
-  <% if (aboutData) { %>
+  <a href="/admin/add-about" class="btn btn-primary">Add About Us</a>
+
+  <% if (aboutData && aboutData.length > 0) { %>
     <table class="table">
       <thead>
         <tr>
@@ -139,10 +139,8 @@
             <td><%= about.name %></td>
             <td><%= about.description %></td>
             <td>
-              <!-- Edit Button -->
               <a href="/admin/about/edit/<%= about._id %>" class="btn btn-warning btn-sm">Edit</a>
               
-              <!-- Delete Button -->
               <form action="/admin/about/delete/<%= about._id %>" method="POST" style="display:inline;">
                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this?');">Delete</button>
               </form>

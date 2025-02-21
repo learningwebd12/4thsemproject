@@ -14,16 +14,27 @@ router.get("/", async (req, res) => {
     res.redirect("/admin");
   }
 });
-
 router.post("/book-service/:id", ensureAuthenticated, async (req, res) => {
   const userId = req.session.user._id;
   const serviceId = req.params.id;
 
   try {
+    // Check if the user has already booked the same service
+    const existingBooking = await Booking.findOne({
+      user: userId,
+      service: serviceId,
+    });
+
+    if (existingBooking) {
+      req.flash("error", "You have already booked this service.");
+      return res.redirect("/services");
+    }
+
+    // Create a new booking
     const newBooking = new Booking({
       user: userId,
       service: serviceId,
-      date: new Date(),
+      bookingDate: new Date(), // Fixed: Changed 'date' to 'bookingDate'
     });
 
     await newBooking.save();
