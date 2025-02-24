@@ -7,14 +7,12 @@
     font-family: navbar;
     src: url("/fonts/Geliat-ExtraBold.otf");
    }
-    nav {
-     
-    }
+    
 
     nav a {
       float: left;
       display: block;
-      color: #f2f2f2;
+      color: #000000;
       text-align: center;
       margin: 0.5vw 1vw;
       text-decoration: none;
@@ -27,34 +25,69 @@
       align-items: center;
       z-index: 999;
       overflow: hidden;
-      background-color: #000000;
-      padding: 1vw 0.5vw;
+      background-color: #ffffff;
+      padding: 1vw 1.5vw;
       font-family: poppins;
+      width: 100%;
 
     }
     .login-btn{
-      text-decoration:none ;
-      cursor: pointer;
+    text-decoration:none ;
+    cursor: pointer;
     font-family: poppins;
     font-size: 1vw;
     padding: 1.1vw 2vw;
-    border-radius: 10vw;
+    border-radius: 0.2vw;
     outline: none;
     border: none;
-    color: #fff;
+    color: #000000;
     }
     .register-btn{
-      text-decoration: none;
-      cursor: pointer;
+    cursor: pointer;
     font-family: poppins;
-    font-size: 1vw;
-    padding: 1.1vw 2vw;
-    border-radius: 10vw;
+    font-size: 1.1vw;
+    padding: 1.1vw 3vw;
+    border-radius: 0.2vw;
     outline: none;
     border: none;
-    color: #fff;
-    background:linear-gradient(rgb(76, 117, 255) 0%, rgb(26, 79, 255) 100%)
+    color: #000000;
+    background:#6cc832; 
+    font-weight: 700;
+    text-decoration: none;
  
+    }
+    .logo{
+    
+      z-index: 2;
+      font-weight: 700;
+    }
+
+    .profile{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+    }
+    .profile-btn{
+      text-decoration: none;
+      margin: 0 1vw ;
+      font-size: 1.1vw;
+      font-weight: 700;
+      color: #000000;
+    }
+
+    .logout-btn{
+      cursor: pointer;
+    font-family: poppins;
+    font-size: 1.1vw;
+    padding: 1vw 2vw;
+    border-radius: 0.2vw;
+    outline: none;
+    border: none;
+    color: #000000;
+    background:#6cc832; 
+    font-weight: 700;
+    text-decoration: none;
     }
 
   </style>
@@ -62,7 +95,7 @@
 <body>
 
   <header class="header">
-    <div class="logo" style="color: white;">MM</div>
+    <p class="logo">Marketing</p>
     <nav>
       <a href="/">Home</a>
       <a href="/about">About</a>
@@ -72,8 +105,11 @@
     </nav>
     <div>
       <% if (userLoggedIn) { %>
-        <a href="/auth/logout" class="logout-btn">Logout</a>
-        <li><a href="/user/profile">Profile</a></li>
+        <div class="profile">
+          <a href="/user/profile" class="profile-btn">Profile</a>
+          <a href="/auth/logout" class="logout-btn">Logout</a>
+          
+        </div>
       <% } else { %>
         <a href="/auth/login" class="login-btn">Login</a>
         <a href="/auth/register" class="register-btn">Register</a>

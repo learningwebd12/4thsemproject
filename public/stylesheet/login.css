@@ -67,13 +67,14 @@ input{
 .login-btn{
     cursor: pointer;
     font-family: poppins;
-    font-size: 1.2vw;
+    font-size: 1.1vw;
     padding: 1.1vw 3vw;
-    border-radius: 0.5vw;
+    border-radius: 0.2vw;
     outline: none;
     border: none;
-    color: #fff;
-  background:linear-gradient(rgb(76, 117, 255) 0%, rgb(26, 79, 255) 100%);
+    color: #000000;
+  background:#9cee69;
+  font-weight: 700;
 }
 .register{
     font-family: login;
