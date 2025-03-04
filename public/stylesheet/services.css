@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: minigap;
+    src: url("../fonts/Gravitype\ -\ Minigap.otf");
+}
+
 
 .header-images{
     width: 100%;
@@ -52,4 +57,38 @@
 }
 .services-link{
     color: #bdbdbd;
+}
+
+.all-services{
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.service-list{
+    border: 1px solid green;
+}
+.services-name{
+    font-size: 1.5vw;
+    font-family: minigap;
+}
+.services-description{
+    font-size: 1vw;
+    font-family: minigap;
+}
+.services-price{
+    font-family: minigap;
+    font-size: 1.2vw;
+}
+.book-services-btn{
+    font-size: 1vw;
+    font-family: minigap;
+    cursor: pointer;
+    padding: 1.1vw 3vw;
+    border-radius: 0.2vw;
+    outline: none;
+    border: none;
+    color: #000000;
+  background:#9cee69;
+  font-weight: 700;
 }

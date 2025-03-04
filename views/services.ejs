@@ -45,19 +45,29 @@
 
    </div>
 
+   <div class="services-two-text">
+    <h1 class="services-h1-text">
+      Exploring Essential Service
+    </h1>
+    <p class="services-p-text">
+      Marketing Mandu is comprehensive contact management, allowing businesses to centralize and organize customer information for easy access.
+    </p>
+   </div>
   <h1>Available Services</h1>
-  <ul>
+
+  <div class="all-services">
     <% services.forEach(service => { %> 
-      <li>
-        <h2><%= service.name %></h2>
-        <p><%= service.description %></p>
-        <p>Price: $<%= service.price %></p>
+      <li class="service-list">
+        <h2 class="services-name"><%= service.name %></h2>
+        <p class="services-description"><%= service.description %></p>
+        <p class="services-price">Price: $<%= service.price %></p>
         <form action="/services/book-service/<%= service._id %>" method="POST">
-          <button type="submit">Book Now</button>
+          <button type="submit" class="book-services-btn">Book Now</button>
         </form>
       </li>
     <% }) %>
-  </ul>
+    </div>
+
   <%- include('partials/footer') %> 
   <script>
     // Auto-hide flash messages after 5 seconds
