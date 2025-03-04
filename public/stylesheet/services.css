@@ -60,10 +60,13 @@
 }
 
 .all-services{
-    background-color: red;
+    
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 1vw;
+    width: 100%;
+    padding: 1vw 2vw;
 }
 .service-list{
     border: 1px solid green;
@@ -91,4 +94,52 @@
     color: #000000;
   background:#9cee69;
   font-weight: 700;
+}
+.question-and-answer{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #100F0F;
+    padding: 1vw 2vw;
+}
+.question-images{
+    display: flex;
+    width: 35%;
+    background-color: green;
+}
+.faq-images{
+    height: 40vw;
+    width: 100%;
+    object-fit: cover;
+    
+}
+.question-details{
+width: 50%;
+border: 1px solid red;
+padding: 2vw 1vw;
+}
+.question-lg-text{
+    font-family: minigap;
+    font-size: 3vw;
+    color: #fff;
+}
+.question-answe-sm-text{
+    color: #fff;
+    font-size: 1vw;
+    font-family: minigap;
+}
+summary{
+    color: #ffffff;
+    font-size: 1.2vw;
+    font-family: minigap;
+}
+.summary-text{
+    font-size: 1vw;
+    font-family: minigap;
+    color: #bdbdbd;
+    padding: 1vw;
+}
+details{
+    margin: 0.5vw 0;
 }

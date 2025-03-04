@@ -57,15 +57,47 @@
 
   <div class="all-services">
     <% services.forEach(service => { %> 
-      <li class="service-list">
+      <div class="service-list">
         <h2 class="services-name"><%= service.name %></h2>
         <p class="services-description"><%= service.description %></p>
         <p class="services-price">Price: $<%= service.price %></p>
         <form action="/services/book-service/<%= service._id %>" method="POST">
           <button type="submit" class="book-services-btn">Book Now</button>
         </form>
-      </li>
+      </div>
     <% }) %>
+    </div>
+
+    <div class="question-and-answer">
+      <div class="question-images">
+<img src="../images/faqs.jpg" alt="" class="faq-images">
+      </div>
+      <div class="question-details">
+        <p class="question-answe-sm-text">Questions & Answers</p>
+        <h1 class="question-lg-text">
+          Providing clarity on frequently asked questions
+        </h1>
+        <div class="all-faq-question">
+
+          <details>
+            <summary>Why’s Hubfolio instead of full-time designer?</summary>
+            <p class="summary-text">How quick is quick? For most design, we’re talking 2-3 business days. We balance speed with quality,ensuring you get top-north design swiftly.</p>
+          </details>
+          <details>
+            <summary>Why’s Hubfolio instead of full-time designer?</summary>
+            <p class="summary-text">How quick is quick? For most design, we’re talking 2-3 business days. We balance speed with quality,ensuring you get top-north design swiftly.</p>
+          </details>
+          <details>
+            <summary>Why’s Hubfolio instead of full-time designer?</summary>
+            <p class="summary-text">How quick is quick? For most design, we’re talking 2-3 business days. We balance speed with quality,ensuring you get top-north design swiftly.</p>
+          </details>
+          <details>
+            <summary>Why’s Hubfolio instead of full-time designer?</summary>
+            <p class="summary-text">How quick is quick? For most design, we’re talking 2-3 business days. We balance speed with quality,ensuring you get top-north design swiftly.</p>
+          </details>
+          
+        </div>
+      </div>
     </div>
 
   <%- include('partials/footer') %> 
