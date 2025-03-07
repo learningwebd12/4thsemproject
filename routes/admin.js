@@ -272,4 +272,16 @@ router.get("/bookings", isAdminAuthenticated, async (req, res) => {
   }
 });
 
+router.post("/delete-message/:id", isAdminAuthenticated, async (req, res) => {
+  try {
+    await Contact.findByIdAndDelete(req.params.id);
+    req.flash("success", "Service deleted successfully.");
+    res.redirect("/admin");
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Failed to delete service.");
+    res.redirect("/admin");
+  }
+});
+
 module.exports = router;

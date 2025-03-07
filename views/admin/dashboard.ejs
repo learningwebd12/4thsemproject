@@ -72,7 +72,7 @@
           </thead>
           <tbody>
             <% services.forEach(service => { %>
-              <tr>
+              <tr class="services-table-admin">
                 <td><%= service.name %></td>
                 <td><%= service.category ? service.category.name : 'N/A' %></td>
                 <td><%= service.description %></td>
@@ -155,35 +155,47 @@
 </div>
 
 
-      <div id="contactsSection" class="hidden">
-        <h2>Contact Messages</h2>
-        <table class="table">
-          <thead>
-            <tr>
+<div id="contactsSection" class="hidden">
+  <h2>Contact Messages</h2>
+  <table class="table">
+      <thead>
+          <tr>
               <th>Name</th>
               <th>Email</th>
               <th>Phone</th>
               <th>Message</th>
               <th>Date</th>
               <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% contacts.forEach(contact => { %>
+          </tr>
+      </thead>
+      <tbody>
+          <% contacts.forEach(contact => { %>
               <tr>
-                <td><%= contact.name %></td>
-                <td><%= contact.email %></td>
-                <td><%= contact.phone %></td>
-                <td><%= contact.message %></td>
-                <td><%= contact.createdAt ? contact.createdAt.toLocaleString() : 'N/A' %></td>
-                <td>
-                  <a href="mailto:<%= contact.email %>?subject=Reply to Your Message&body=Hi <%= contact.name %>,%0D%0A%0D%0AThank you for reaching out. Here is our response to your message:%0D%0A%0D%0A<%= contact.message %>%0D%0A%0D%0ARegards,%0D%0A[Your Company Name]" class="btn btn-primary btn-sm">Reply via Email</a>
-                </td>
+                  <td><%= contact.name %></td>
+                  <td><%= contact.email %></td>
+                  <td><%= contact.phone %></td>
+                  <td><%= contact.message %></td>
+                  <td><%= contact.createdAt ? contact.createdAt.toLocaleString() : 'N/A' %></td>
+                  <td>
+                      <a href="mailto:<%= contact.email %>?subject=Reply to Your Message&body=Hi <%= contact.name %>,%0D%0A%0D%0AThank you for reaching out. Here is our response to your message:%0D%0A%0D%0A<%= contact.message %>%0D%0A%0D%0ARegards,%0D%0A[Your Company Name]" class="btn btn-primary btn-sm">Reply via Email</a>
+                      <!-- Complete Button -->
+                      <form action="/admin/delete-message/<%= contact._id %>" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirmDelete();">
+                          Complete
+                        </button>
+                        
+                      </form>
+                      <td>
+                      
+                       
+                      </td>
+                  </td>
               </tr>
-            <% }); %>
-          </tbody>
-        </table>
-      </div>
+          <% }); %>
+      </tbody>
+  </table>
+</div>
+
   
       <div id="bookingsSection" class="hidden">
         <h2>Bookings</h2>
