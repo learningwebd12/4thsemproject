@@ -3,53 +3,179 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="/stylesheet/dashboards.css">
+  <title>Edit Service</title>
+  <style>
+      /* Global Styles */
+      body {
+          font-family: 'Arial', sans-serif;
+          background-color: #121212;
+          color: #e0e0e0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+          flex-direction: column;
+      }
+
+      .container {
+          background-color: #1f1f1f;
+          padding: 30px;
+          border-radius: 10px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+          width: 100%;
+          max-width: 500px;
+          text-align: center;
+      }
+
+      h2 {
+          color: #ff9800;
+          margin-bottom: 20px;
+          font-size: 24px;
+      }
+
+      /* Alert Messages */
+      .alert {
+          padding: 10px;
+          border-radius: 5px;
+          margin-bottom: 15px;
+          font-size: 14px;
+          text-align: center;
+      }
+
+      .alert-success {
+          background-color: #4caf50;
+          color: white;
+      }
+
+      .alert-danger {
+          background-color: #f44336;
+          color: white;
+      }
+
+      /* Form Styles */
+      .form-group {
+          margin-bottom: 15px;
+          text-align: left;
+      }
+
+      label {
+          display: block;
+          margin-bottom: 5px;
+          font-size: 16px;
+          color: #ccc;
+      }
+
+      .form-control {
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #555;
+          border-radius: 8px;
+          font-size: 16px;
+          color: #e0e0e0;
+          background-color: #2c2c2c;
+          transition: border-color 0.3s;
+      }
+
+      .form-control:focus {
+          border-color: #ff9800;
+          outline: none;
+      }
+
+      textarea {
+          resize: none;
+      }
+
+      button {
+          background-color: #ff9800;
+          color: white;
+          border: none;
+          padding: 12px;
+          font-size: 16px;
+          border-radius: 8px;
+          cursor: pointer;
+          width: 100%;
+          transition: background-color 0.3s;
+      }
+
+      button:hover {
+          background-color: #ffb74d;
+      }
+
+      .btn-secondary {
+          background-color: #6c757d;
+          margin-top: 10px;
+      }
+
+      .btn-secondary:hover {
+          background-color: #5a6268;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 500px) {
+          .container {
+              padding: 20px;
+          }
+
+          h2 {
+              font-size: 20px;
+          }
+      }
+  </style>
 </head>
 <body>
 
   <div class="container">
-    <h2>Edit Service</h2>
+      <h2>Edit Service</h2>
 
-    <% if (successMessage) { %>
-      <div class="alert alert-success"><%= successMessage %></div>
-    <% } %>
+      <!-- Success & Error Messages -->
+      <% if (successMessage.length > 0) { %>
+        <div class="alert alert-success" id="successMessage"><%= successMessage %></div>
+      <% } %>
+      <% if (errorMessage.length > 0) { %>
+        <div class="alert alert-danger" id="errorMessage"><%= errorMessage %></div>
+      <% } %>
 
-    <% if (errorMessage) { %>
-      <div class="alert alert-danger"><%= errorMessage %></div>
-    <% } %>
+      <form action="/admin/edit/<%= service._id %>" method="POST">
+          <div class="form-group">
+              <label for="name">Name:</label>
+              <input type="text" name="name" id="name" class="form-control" value="<%= service.name %>" required>
+          </div>
 
-    <form action="/admin/edit/<%= service._id %>" method="POST">
-      <div class="mb-3">
-        <label for="name" class="form-label">Service Name</label>
-        <input type="text" name="name" id="name" class="form-control" value="<%= service.name %>" required>
-      </div>
+          <div class="form-group">
+              <label for="category">Category:</label>
+              <select name="category" id="category" class="form-control" required>
+                  <% categories.forEach(category => { %>
+                    <option value="<%= category._id %>" <%= service.category && service.category._id == category._id ? 'selected' : '' %>><%= category.name %></option>
+                  <% }); %>
+              </select>
+          </div>
 
-      <div class="mb-3">
-        <label for="category" class="form-label">Category</label>
-        <select name="category" id="category" class="form-control" required>
-          <% categories.forEach(category => { %>
-            <option value="<%= category._id %>" <%= service.category && service.category._id == category._id ? 'selected' : '' %>>
-              <%= category.name %>
-            </option>
-          <% }); %>
-        </select>
-      </div>
+          <div class="form-group">
+              <label for="description">Description:</label>
+              <textarea name="description" id="description" class="form-control" rows="3" required><%= service.description %></textarea>
+          </div>
 
-      <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea name="description" id="description" class="form-control" required><%= service.description %></textarea>
-      </div>
+          <div class="form-group">
+              <label for="price">Price:</label>
+              <input type="number" name="price" id="price" class="form-control" value="<%= service.price %>" min="0" required>
+          </div>
 
-      <div class="mb-3">
-        <label for="price" class="form-label">Price</label>
-        <input type="number" name="price" id="price" class="form-control" value="<%= service.price %>" required>
-      </div>
-
-      <button type="submit" class="btn btn-primary">Update Service</button>
-      <a href="/admin" class="btn btn-secondary">Cancel</a>
-    </form>
+          <button type="submit">Update Service</button>
+          <a href="/admin" class="btn-secondary btn">Cancel</a>
+      </form>
   </div>
+
+  <script>
+      // Auto-hide success & error messages after 5 seconds
+      setTimeout(() => {
+          const successMessage = document.getElementById("successMessage");
+          const errorMessage = document.getElementById("errorMessage");
+
+          if (successMessage) successMessage.style.display = "none";
+          if (errorMessage) errorMessage.style.display = "none";
+      }, 5000);
+  </script>
 
 </body>
 </html>

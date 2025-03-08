@@ -52,3 +52,76 @@
 .services-link{
     color: #bdbdbd;
 }
+
+
+.about-bottom-style{
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.first-images-bottom{
+    width: 40%;
+    padding: 5vw;
+    display: flex;
+    position: relative;
+}
+.overlay-text{
+    position: absolute;
+    bottom: 15vw;
+    left: 2vw;
+    background:#9cee69;
+    color: #000000;
+    font-family: minigap;
+    text-align: start;
+    padding: 3vw 1.5vw;
+    font-size: 1vw;
+    border-radius: 1vw;
+}
+.first-images-bottom img{
+    height: 40vw;
+    display: flex;
+    object-fit: cover;
+    width: 100%;
+    border-radius: 1vw;
+   
+}
+.first-images-bottom::after{
+position: absolute;
+content: "";
+top: 3vw;
+left: 12vw;
+height: 5vw;
+width: 15vw;
+background-color: #ffffff;
+border-radius: 10vw;
+
+}
+.first-abt-span{
+    font-size: 3vw;
+    font-weight: 700;
+}
+.second-text-bottom{
+    width: 60%;
+    padding: 5vw 5vw;
+}
+.first-title .about-btm-p{
+font-family: minigap;
+font-size: 1vw;
+}
+.about-btn-h1{
+    font-family: minigap;
+    font-size: 2.5vw;
+}
+.two-list{
+    padding: 1vw;
+}
+.first-list h3{
+    font-family: minigap;
+    font-size: 1.3vw;
+}
+.first-list p{
+    font-family: minigap;
+    font-size: 1.1vw;
+    padding: 1vw 0;
+}

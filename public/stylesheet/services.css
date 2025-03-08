@@ -60,28 +60,38 @@
 }
 
 .all-services{
-    
+    background-color: #ffffff;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     gap: 1vw;
     width: 100%;
-    padding: 1vw 2vw;
+    padding: 1vw 0.5vw;
+    flex-wrap: wrap;
+    
 }
 .service-list{
-    border: 1px solid green;
+   
+    width: 30%;
+    border-radius: 0.8vw;
+    padding: 1vw;
+   
 }
 .services-name{
     font-size: 1.5vw;
     font-family: minigap;
+    margin: 0.5vw 0;
 }
 .services-description{
     font-size: 1vw;
     font-family: minigap;
+    margin: 0.5vw 0;
 }
 .services-price{
     font-family: minigap;
     font-size: 1.2vw;
+    font-weight: 700;
+    margin: 0.5vw 0;
 }
 .book-services-btn{
     font-size: 1vw;
@@ -154,4 +164,27 @@ summary{
 }
 details{
     margin: 0.5vw 0;
+}
+.services-two-text{
+    padding: 1vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.services-h1-text{
+    font-family: minigap;
+    font-size: 2.5vw;
+    text-align: center;
+}
+.services-p-text{
+    font-family: minigap;
+    text-align: center;
+    width: 50%;
+    margin: 1vw 0;
+}
+.available-services-text{
+    text-align: start;
+    margin: 0 0 0 2vw;
+    font-family: minigap;
+    font-size: 2vw;
 }
