@@ -8,10 +8,29 @@
 </head>
 <body>
 
+  <style>
+    .alert {
+  background-color: #065908;
+  color: white;
+  padding: 15px;
+  margin-top: 20px;
+  right: 0;
+  text-align: center;
+  position: absolute;
+}
+
+  </style>
    <%- include('partials/header') %> 
 
    <div class="main-home">
-
+    <% if (successMessage.length > 0) { %>
+      <div class="alert alert-success" id="successMessage"><%= successMessage %></div>
+    <% } %>
+  
+    <% if (errorMessage.length > 0) { %>
+      <div class="alert alert-danger" id="errorMessage"><%= errorMessage %></div>
+    <% } %>
+    
     <section class="home-page">
 
   <img src="../images/image-startup-1.png" alt="" class="first-overlay">
@@ -85,5 +104,21 @@
    </div>
  
    <%- include('partials/footer') %> 
+
+   <script>
+    // Auto-hide flash messages after 5 seconds
+    setTimeout(() => {
+      const successMessage = document.getElementById("successMessage");
+      
+
+      if (successMessage) {
+        successMessage.style.transition = "opacity 0.5s";
+        successMessage.style.opacity = "0";
+        setTimeout(() => successMessage.remove(), 500);
+      }
+
+      
+    }, 5000);
+  </script>
 </body>
 </html>

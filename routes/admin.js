@@ -272,6 +272,17 @@ router.get("/bookings", isAdminAuthenticated, async (req, res) => {
   }
 });
 
+router.post("/delete-booking/:id", isAdminAuthenticated, async (req, res) => {
+  try {
+    await Booking.findByIdAndDelete(req.params.id);
+    req.flash("success", "Booking Completed successfully");
+    res.redirect("/admin");
+  } catch (err) {
+    console.log(err);
+    req.flash("error", "failed to delete");
+  }
+});
+
 router.post("/delete-message/:id", isAdminAuthenticated, async (req, res) => {
   try {
     await Contact.findByIdAndDelete(req.params.id);

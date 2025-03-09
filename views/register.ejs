@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register</title>
-  <link
-  href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
-  rel="stylesheet"
-/>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
   <link rel="stylesheet" href="../stylesheet/register.css">
 </head>
 <body>
@@ -13,35 +12,113 @@
   <div class="main-register">
     <h1>Register</h1>
 
-  <form action="/auth/register" method="POST">
-   
-    <div class="register">
-      <i class="ri-shield-user-line"></i>
-      <input type="text" name="fullname" placeholder="Full Name" required />
-    </div>
+    <form id="registerForm" action="/auth/register" method="POST">
+      
+      <div class="register">
+        <label for="fullname"><i class="ri-shield-user-line"></i></label>
+        <input type="text" id="fullname" name="fullname" placeholder="Full Name">
+        <small id="nameError" class="error-message"></small>
+      </div>
 
-   <div class="register">
-    <i class="ri-mail-line"></i>
-    <input type="email" name="email" placeholder="Email" required />
-   </div>
+      <div class="register">
+        <label for="email"><i class="ri-mail-line"></i></label>
+        <input type="email" id="email" name="email" placeholder="Email">
+        <small id="emailError" class="error-message"></small>
+      </div>
 
-    <div class="register">
-      <i class="ri-lock-password-line"></i>
-    <input type="password" name="password" placeholder="Password" required />
-    </div>
+      <div class="register">
+        <label for="password"><i class="ri-lock-password-line"></i></label>
+        <input type="password" id="password" name="password" placeholder="Password" autocomplete="off">
+        <small id="passwordError" class="error-message"></small>
+      </div>
 
-    <div class="register">
-      <i class="ri-lock-password-line"></i>
-    <input type="password" name="confirmPassword" placeholder="Confirm Password" required />
+      <div class="register">
+        <label for="confirmPassword"><i class="ri-lock-password-line"></i></label>
+        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" autocomplete="off">
+        <small id="confirmPasswordError" class="error-message"></small>
+      </div>
 
-    </div>
-    <div class="register-btn-box">
-      <button type="submit" class="register-btn">Register</button>
-    <a href="/auth/login" class="login-text">Already have an account? Login</a>
-    </div>
-</form>
+      <div class="register-btn-box">
+        <button type="submit" class="register-btn">Register</button>
+        <a href="/auth/login" class="login-text">Already have an account? Login</a>
+      </div>
 
+    </form>
   </div>
- 
+
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", function(event) {
+      let valid = true;
+
+      
+      const fullname = document.getElementById("fullname");
+      const email = document.getElementById("email");
+      const password = document.getElementById("password");
+      const confirmPassword = document.getElementById("confirmPassword");
+
+    
+      const nameError = document.getElementById("nameError");
+      const emailError = document.getElementById("emailError");
+      const passwordError = document.getElementById("passwordError");
+      const confirmPasswordError = document.getElementById("confirmPasswordError");
+
+      
+      nameError.textContent = "";
+      emailError.textContent = "";
+      passwordError.textContent = "";
+      confirmPasswordError.textContent = "";
+
+      
+      if (fullname.value.trim() === "") {
+        nameError.textContent = "Full Name is required.";
+        valid = false;
+      }
+
+      
+      if (email.value.trim() === "") {
+        emailError.textContent = "Email is required.";
+        valid = false;
+      } else {
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailPattern.test(email.value)) {
+          emailError.textContent = "Please enter a valid email address.";
+          valid = false;
+        }
+      }
+
+     
+      if (password.value.trim() === "") {
+        passwordError.textContent = "Password is required.";
+        valid = false;
+      } else if (password.value.length < 6) {
+        passwordError.textContent = "Password must be at least 6 characters.";
+        valid = false;
+      }
+
+      
+      if (confirmPassword.value.trim() === "") {
+        confirmPasswordError.textContent = "Please confirm your password.";
+        valid = false;
+      } else if (password.value !== confirmPassword.value) {
+        confirmPasswordError.textContent = "Passwords do not match.";
+        valid = false;
+      }
+
+      
+      if (!valid) {
+        event.preventDefault();
+      }
+    });
+  </script>
+
+  <style>
+    .error-message {
+      color: red;
+      font-size: 12px;
+      margin-top: 5px;
+      display: block;
+    }
+  </style>
+
 </body>
 </html>

@@ -1,32 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
-  <link
-    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
-    rel="stylesheet"
-/>
-<link rel="stylesheet" href="../stylesheet/login.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="../stylesheet/login.css">
 </head>
 <body>
+<style>
+  .alert-success-register{
+    position: absolute;
+    top: 1vw;
+    right: 1vw;
+    font-family: poppins;
+  }
+</style>
+
+  <% if (successMessage.length > 0) { %>
+    <div class="alert alert-success-register" id="successMessage"><%= successMessage %></div>
+  <% } %>
+
+  
+
   <div class="main-login">
     <h1 style="text-align: center;">Login</h1>
-  <p style="text-align: center;">Welcome Back</p>
-  <form action="/auth/login" method="POST">
-    <div class="user-login">
-      <i class="ri-shield-user-fill"></i>
-    <input type="email" name="email" placeholder="Email" required>
-    </div>
-    <div class="user-login">
-      <i class="ri-lock-password-line"></i>
-    <input type="password" name="password" placeholder="Password" required>
-    </div>
-    <div class="login-register">
-      <button type="submit" class="login-btn">Login</button>
-    <a href="/auth/register" class="register">Don't have an account? Register</a>
-    </div>
-  </form>
-  
+    <p style="text-align: center;">Welcome Back</p>
+    <form id="loginForm" action="/auth/login" method="POST">
+      <div class="user-login">
+        <label for="email"><i class="ri-shield-user-fill"></i></label>
+        <input type="email" id="email" name="email" placeholder="Email">
+        <small id="emailError" class="error-message"></small>
+      </div>
+      <div class="user-login">
+        <label for="password"><i class="ri-lock-password-line"></i></label>
+        <input type="password" id="password" name="password" placeholder="Password" autocomplete="off">
+        <small id="passwordError" class="error-message"></small>
+      </div>
+      <div class="login-register">
+        <button type="submit" class="login-btn">Login</button>
+        <a href="/auth/register" class="register">Don't have an account? Register</a>
+      </div>
+    </form>
   </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+      let valid = true;
+
+      
+      const email = document.getElementById("email");
+      const password = document.getElementById("password");
+      const emailError = document.getElementById("emailError");
+      const passwordError = document.getElementById("passwordError");
+
+      
+      emailError.textContent = "";
+      passwordError.textContent = "";
+
+      
+      if (email.value.trim() === "") {
+        emailError.textContent = "Email is required.";
+        valid = false;
+      } else {
+        
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailPattern.test(email.value)) {
+          emailError.textContent = "Please enter a valid email address.";
+          valid = false;
+        }
+      }
+
+      
+      if (password.value.trim() === "") {
+        passwordError.textContent = "Password is required.";
+        valid = false;
+      } else if (password.value.length < 6) {
+        passwordError.textContent = "Password must be at least 6 characters.";
+        valid = false;
+      }
+
+    
+      if (!valid) {
+        event.preventDefault();
+      }
+    });
+  </script>
+
+  <style>
+    .error-message {
+      color: red;
+      font-size: 12px;
+      margin-top: 5px;
+      display: block;
+    }
+  </style>
+
 </body>
 </html>

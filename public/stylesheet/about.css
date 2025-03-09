@@ -125,3 +125,17 @@ font-size: 1vw;
     font-size: 1.1vw;
     padding: 1vw 0;
 }
+.about-title-main{
+    font-family: minigap;
+    font-size: 2vw;
+}
+.main-about-description{
+    width: 50%;
+    padding: 2vw;
+}
+.about-description{
+    font-family: minigap;
+    font-size: 1.2vw;
+    line-height: 1.7vw;
+    margin: 1vw 0;
+}

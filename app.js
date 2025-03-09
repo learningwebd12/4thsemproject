@@ -73,6 +73,7 @@ app.use("/user", userRoutes);
 // Home Route
 app.get("/", (req, res) => {
   res.render("home");
+  req.flash("success", "Service booked successfully!");
 });
 
 // Admin Logout
