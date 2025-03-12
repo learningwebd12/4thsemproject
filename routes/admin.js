@@ -253,6 +253,21 @@ router.post("/add-about", isAdminAuthenticated, async (req, res) => {
   }
 });
 
+router.get("/edit-about/:id", isAdminAuthenticated, async (req, res) => {
+  try {
+    const about = await About.findById(req.params.id);
+    if (!about) {
+      req.flash("error", "About section not found.");
+      return res.redirect("/admin/about");
+    }
+    res.render("admin/edit-about", { aboutData: about }); // Ensure correct variable name
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Failed to load About section for editing.");
+    res.redirect("/admin/about");
+  }
+});
+
 // ✅ Fetch Bookings for Admin Dashboard
 router.get("/bookings", isAdminAuthenticated, async (req, res) => {
   try {
