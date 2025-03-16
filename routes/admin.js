@@ -275,11 +275,11 @@ router.post("/edit-about/:id", isAdminAuthenticated, async (req, res) => {
     await About.findByIdAndUpdate(req.params.id, { name, description });
 
     req.flash("success", "About section updated successfully!");
-    res.redirect("/admin/about"); // Redirect to About Us page
+    res.redirect("/admin"); // Redirect to About Us page
   } catch (err) {
     console.error(err);
     req.flash("error", "Failed to update About section.");
-    res.redirect("/admin/about");
+    res.redirect("/admin");
   }
 });
 

@@ -1,48 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <meta name="description" content="Contact us for any inquiries.">
+  <title>Contact Us</title>
   <link rel="stylesheet" href="/stylesheet/contact.css">
 </head>
+
 <body>
 
   <%- include('partials/header') %>
-   <div class="header-images">
+
+  <div class="header-images">
     <h1 class="header-text-h1">Contact</h1>
-
-    <div class="two-link"><a href="/" class="home-link">Home</a> <span class="arrow-span">></span> <p class="services-link">Contact</p></div>
-
-   </div>
-<section class="contact-us-section">
-  <div class="contact-text">
-    <p class="contact-us-text">Contact us</p>
-    <h1 class="contact-h1">Get in Touch: <span class="contact-span">
-      We're Here to Answer Your Questions
-    </span></h1>
+    <div class="two-link">
+      <a href="/" class="home-link">Home</a>
+      <span class="arrow-span">></span>
+      <p class="services-link">Contact</p>
+    </div>
   </div>
 
-<form action="/contact" method="POST">
-  <div class="form-group">
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" class="form-control" required placeholder="Fulll Name">
-  </div>
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" class="form-control" required placeholder="Email">
-  </div>
-  <div class="form-group">
-    <label for="phone">Phone</label>
-    <input type="tel" id="phone" name="phone" class="form-control" required placeholder="Phone">
-  </div>
-  <div class="form-group">
-    <label for="message">Message</label>
-    <textarea id="message" name="message" rows="5" class="textarea" required placeholder="Message"></textarea>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-</section>
-   <%- include('partials/footer') %> 
+  <section class="contact-us-section">
+    <div class="contact-text">
+      <p class="contact-us-text">Contact us</p>
+      <h1 class="contact-h1">Get in Touch:
+        <span class="contact-span">We're Here to Answer Your Questions</span>
+      </h1>
+    </div>
+
+    <form id="contactForm" action="/contact" method="POST" onsubmit="return validateForm()">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" class="form-control" placeholder="Full Name">
+        <small class="error" id="nameError"></small>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" class="form-control" placeholder="Email">
+        <small class="error" id="emailError"></small>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone" class="form-control" placeholder="Phone" maxlength="10">
+        <small class="error" id="phoneError"></small>
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" class="textarea" placeholder="Message"></textarea>
+        <small class="error" id="messageError"></small>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </section>
+
+  <%- include('partials/footer') %>
+
+  <script>
+    function validateForm() {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      let isValid = true;
+
+      // Reset all error messages
+      document.getElementById('nameError').textContent = '';
+      document.getElementById('emailError').textContent = '';
+      document.getElementById('phoneError').textContent = '';
+      document.getElementById('messageError').textContent = '';
+
+      // Name validation
+      if (name === '' || name.length < 3) {
+        document.getElementById('nameError').textContent = 'Name must be at least 3 characters.';
+        isValid = false;
+      }
+
+      // Email validation
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!email.match(emailPattern)) {
+        document.getElementById('emailError').textContent = 'Invalid email format.';
+        isValid = false;
+      }
+
+      // Phone validation
+      const phonePattern = /^\d{10}$/;
+      if (!phone.match(phonePattern)) {
+        document.getElementById('phoneError').textContent = 'Phone number must be exactly 10 digits.';
+        isValid = false;
+      }
+
+      // Message validation
+      if (message === '') {
+        document.getElementById('messageError').textContent = 'Message cannot be empty.';
+        isValid = false;
+      }
+
+      return isValid; // Prevent form submission if validation fails
+    }
+  </script>
+
+  <style>
+    .error {
+      color: red;
+      font-size: 0.9rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 8px 12px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .btn {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+
 </body>
+
 </html>
