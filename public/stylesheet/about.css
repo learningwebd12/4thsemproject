@@ -130,12 +130,22 @@ font-size: 1vw;
     font-size: 2vw;
 }
 .main-about-description{
-    width: 50%;
+    width: 100%;
     padding: 2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
 }
 .about-description{
     font-family: minigap;
     font-size: 1.2vw;
     line-height: 1.7vw;
     margin: 1vw 0;
+    width: 80%;
+}
+
+.main-about-container{
+    background-color: red;
 }

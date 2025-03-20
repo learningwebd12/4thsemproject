@@ -5,6 +5,7 @@ const Contact = require("../models/contact.model");
 const Booking = require("../models/booking.model");
 const ServiceCategory = require("../models/ServiceCategory.model");
 const About = require("../models/about.model");
+const ServiceDetails = require("../models/serviceDetails.model");
 
 const isAdminAuthenticated = (req, res, next) => {
   if (req.session.isAuthenticated && req.session.admin) {
@@ -14,14 +15,17 @@ const isAdminAuthenticated = (req, res, next) => {
   res.redirect("/admin/auth/login");
 };
 
-// ✅ Admin Dashboard
-router.get("/", isAdminAuthenticated, async (req, res) => {
+//  Admin Dashboard
+
+// isAdminAuthenticated,
+router.get("/", async (req, res) => {
   try {
     const services = await Service.find().populate("category");
     const contacts = await Contact.find();
     const bookings = await Booking.find().populate("service").populate("user");
     const categories = await ServiceCategory.find();
     const aboutData = await About.find();
+    const serviceDetails = await ServiceDetails.find().populate("service"); // Fetch Service Details
 
     res.render("admin/dashboard", {
       services,
@@ -29,17 +33,18 @@ router.get("/", isAdminAuthenticated, async (req, res) => {
       bookings,
       categories,
       aboutData,
+      serviceDetails, // Pass it separately
       successMessage: req.flash("success"),
       errorMessage: req.flash("error"),
     });
   } catch (err) {
     console.error(err);
-    req.flash("error", "Failed to load data.");
+    req.flash("error", "Failed to load dashboard data.");
     res.redirect("/admin");
   }
 });
 
-// ✅ Render Add Category Form
+//  Render Add Category Form
 router.get("/add-category", isAdminAuthenticated, (req, res) => {
   res.render("admin/add-category", { messages: req.flash() });
 });
@@ -63,7 +68,7 @@ router.post("/add-category", isAdminAuthenticated, async (req, res) => {
   }
 });
 
-// ✅ Edit Category Form
+// Edit Category Form
 router.get("/edit-category/:id", isAdminAuthenticated, async (req, res) => {
   try {
     const category = await ServiceCategory.findById(req.params.id);
@@ -79,7 +84,7 @@ router.get("/edit-category/:id", isAdminAuthenticated, async (req, res) => {
   }
 });
 
-// ✅ Update Category
+//  Update Category
 router.post("/edit-category/:id", isAdminAuthenticated, async (req, res) => {
   const { name } = req.body;
   if (!name) {
@@ -99,7 +104,7 @@ router.post("/edit-category/:id", isAdminAuthenticated, async (req, res) => {
   }
 });
 
-// ✅ Delete Category
+//  Delete Category
 router.post("/delete-category/:id", isAdminAuthenticated, async (req, res) => {
   try {
     await ServiceCategory.findByIdAndDelete(req.params.id);
@@ -112,8 +117,9 @@ router.post("/delete-category/:id", isAdminAuthenticated, async (req, res) => {
   }
 });
 
-// ✅ Render Add Service Form
-router.get("/add-service", isAdminAuthenticated, async (req, res) => {
+//  Render Add Service Form
+// isAdminAuthenticated, add garnu xa
+router.get("/add-service", async (req, res) => {
   try {
     const categories = await ServiceCategory.find();
     res.render("admin/add-service", { categories });
@@ -124,8 +130,9 @@ router.get("/add-service", isAdminAuthenticated, async (req, res) => {
   }
 });
 
-// ✅ Add Service
-router.post("/add-service", isAdminAuthenticated, async (req, res) => {
+//  Add Service
+// isAdminAuthenticated, add garnu xa
+router.post("/add-service", async (req, res) => {
   const { name, category, description, price } = req.body;
 
   try {
@@ -140,8 +147,8 @@ router.post("/add-service", isAdminAuthenticated, async (req, res) => {
   }
 });
 
-// ✅ View Services
-router.get("/services", isAdminAuthenticated, async (req, res) => {
+//  View Services
+router.get("/services", async (req, res) => {
   try {
     const services = await Service.find().populate("category");
     res.render("admin/services", { services });
@@ -152,8 +159,9 @@ router.get("/services", isAdminAuthenticated, async (req, res) => {
   }
 });
 
-// ✅ Edit Service Form
-router.get("/edit/:id", isAdminAuthenticated, async (req, res) => {
+//  Edit Service Form
+// isAdminAuthenticated, add garnu xa
+router.get("/edit/:id", async (req, res) => {
   try {
     const service = await Service.findById(req.params.id).populate("category");
     const categories = await ServiceCategory.find();
@@ -170,8 +178,9 @@ router.get("/edit/:id", isAdminAuthenticated, async (req, res) => {
   }
 });
 
-// ✅ Update Service
-router.post("/edit/:id", isAdminAuthenticated, async (req, res) => {
+//  Update Service
+// isAdminAuthenticated, add garnu xa
+router.post("/edit/:id", async (req, res) => {
   const { name, category, description, price } = req.body;
 
   try {
@@ -191,8 +200,9 @@ router.post("/edit/:id", isAdminAuthenticated, async (req, res) => {
   }
 });
 
-// ✅ Delete Service
-router.post("/delete-service/:id", isAdminAuthenticated, async (req, res) => {
+// Delete Service
+// isAdminAuthenticated, add garnu xa
+router.post("/delete-service/:id", async (req, res) => {
   try {
     await Service.findByIdAndDelete(req.params.id);
     req.flash("success", "Service deleted successfully.");
@@ -217,7 +227,7 @@ router.get("/add-about", async (req, res) => {
     });
   }
 });
-// ✅ Frontend: Show About Us Page
+//  Frontend: Show About Us Page
 router.get("/about", async (req, res) => {
   try {
     const aboutData = await About.findOne(); // Fetch About Us data
@@ -283,7 +293,7 @@ router.post("/edit-about/:id", isAdminAuthenticated, async (req, res) => {
   }
 });
 
-// ✅ Fetch Bookings for Admin Dashboard
+//  Fetch Bookings for Admin Dashboard
 router.get("/bookings", isAdminAuthenticated, async (req, res) => {
   try {
     const bookings = await Booking.find()

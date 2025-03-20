@@ -57,15 +57,13 @@ router.post("/", async (req, res) => {
   }
 });
 
-// DELETE route for deleting a contact
 router.delete("/admin/contact/:contactId", async (req, res) => {
   const { contactId } = req.params;
 
   try {
-    // Find the contact by its ID and delete it
     await Contact.findByIdAndDelete(contactId);
     req.flash("success", "Contact has been deleted successfully.");
-    res.redirect("/admin/contacts"); // Redirect to the admin contacts page
+    res.redirect("/admin/contacts");
   } catch (error) {
     console.error("Error deleting contact:", error);
     req.flash("error", "An error occurred while deleting the contact.");

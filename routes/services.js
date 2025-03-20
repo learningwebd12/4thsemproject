@@ -14,6 +14,16 @@ router.get("/", async (req, res) => {
     res.redirect("/admin");
   }
 });
+router.get("/:id", async (req, res) => {
+  try {
+    const service = await Service.findById(req.params.id);
+    res.render("serviceDetails", { service });
+  } catch (err) {
+    console.error(err);
+    res.redirect("/services");
+  }
+});
+
 router.post("/book-service/:id", ensureAuthenticated, async (req, res) => {
   const userId = req.session.user._id;
   const serviceId = req.params.id;

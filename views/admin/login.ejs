@@ -100,7 +100,7 @@
         <h2>Admin Login</h2>
         <form id="login-form" action="/admin/auth/send-otp" method="POST" onsubmit="return validateForm()">
             <label for="email">Email:</label>
-            <input type="email" name="email" id="email" required>
+            <input type="email" name="email" id="email">
             <button type="submit">Send OTP</button>
             <div id="error-message" class="error"></div>
         </form>
@@ -108,21 +108,24 @@
 
     <script>
         function validateForm() {
-            var email = document.getElementById("email").value;
-            var errorMessage = document.getElementById("error-message");
+    var email = document.getElementById("email").value;
+    var errorMessage = document.getElementById("error-message");
 
-            
-            var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (email === "") {
+        errorMessage.textContent = "Email field cannot be empty.";
+        return false;
+    }
 
-            
-            if (!emailRegex.test(email)) {
-                errorMessage.textContent = "Please enter a valid email address.";
-                return false; 
-            } else {
-                errorMessage.textContent = ""; 
-                return true; 
-            }
-        }
+    // Email regex validation
+    var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailRegex.test(email)) {
+        errorMessage.textContent = "Please enter a valid email address.";
+        return false;
+    }
+    errorMessage.textContent = ""; 
+    return true;
+}
+
     </script>
 </body>
 </html>

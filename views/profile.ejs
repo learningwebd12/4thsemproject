@@ -5,6 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Profile</title>
   <link rel="stylesheet" href="../stylesheet/profile.css">
+  <style>
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 20px 40px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .confirm-btn {
+      margin-right: 10px;
+      padding: 8px 20px;
+      background-color: red;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .close-btn {
+      padding: 8px 20px;
+      background-color: gray;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
@@ -28,56 +65,89 @@
 <% } %>
 
 <div class="profile-container">
-    <h2>User Profile</h2>
+  <h2>User Profile</h2>
 
-    <div class="profile-info">
-        <p><strong>Name:</strong> <%= user.fullname %></p>
-        <p><strong>Email:</strong> <%= user.email %></p>
-    </div>
+  <div class="profile-info">
+    <p><strong>Name:</strong> <%= user.fullname %></p>
+    <p><strong>Email:</strong> <%= user.email %></p>
+  </div>
 
-    <h2>Your Bookings</h2>
-    <div class="bookings-container">
-        <% if (bookings.length > 0) { %>
-            <% bookings.forEach(booking => { %>
-                <div class="booking-item">
-                    <strong>Service:</strong> 
-                    <% if (booking.service) { %>
-                        <%= booking.service.name %>
-                    <% } else { %>
-                        <em>Service not available</em>
-                    <% } %>
-                    <br>
-                    <strong>Booking Date:</strong> <%= new Date(booking.bookingDate).toDateString() %>
+  <h2>Your Bookings</h2>
+  <div class="bookings-container">
+    <% if (bookings.length > 0) { %>
+      <% bookings.forEach(booking => { %>
+        <div class="booking-item">
+          <strong>Service:</strong>
+          <% if (booking.service) { %>
+            <%= booking.service.name %>
+          <% } else { %>
+            <em>Service not available</em>
+          <% } %>
+          <br>
+          <strong>Booking Date:</strong> <%= new Date(booking.bookingDate).toDateString() %>
 
-                    <!-- Cancel Button -->
-                    <form action="/user/cancel-booking/<%= booking._id %>" method="POST" style="display:inline;">
-                        <button type="submit" onclick="return confirm('Are you sure you want to cancel this service?');">
-                            Cancel Booking
-                        </button>
-                    </form>
-                </div>
-            <% }); %>
-        <% } else { %>
-            <p style="text-align:center; color:#888;">No bookings yet.</p>
-        <% } %>
-    </div>
+          <!-- Cancel Button -->
+          <button type="button" onclick="showCancelModal('<%= booking._id %>')">
+            Cancel Booking
+          </button>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <p style="text-align:center; color:#888;">No bookings yet.</p>
+    <% } %>
+  </div>
+</div>
+
+
+<div id="cancelModal" class="modal">
+  <div class="modal-content">
+    <p>Are you sure you want to cancel this booking?</p>
+    <button id="confirmCancel" class="confirm-btn">Yes, Cancel</button>
+    <button id="closeModal" class="close-btn">No, Keep Booking</button>
+  </div>
 </div>
 
 <script>
-    setTimeout(() => {
-      const successMessage = document.getElementById("successMessage");
-      const errorMessage = document.getElementById("errorMessage");
 
-      if (successMessage) {
-        successMessage.style.opacity = "0";
-        setTimeout(() => successMessage.remove(), 500);
-      }
+  let bookingIdToCancel = null;
 
-      if (errorMessage) {
-        errorMessage.style.opacity = "0";
-        setTimeout(() => errorMessage.remove(), 500);
-      }
-    }, 5000);
+  function showCancelModal(bookingId) {
+    const modal = document.getElementById("cancelModal");
+    modal.style.display = "flex";
+    bookingIdToCancel = bookingId; 
+  }
+
+ 
+  document.getElementById("closeModal").addEventListener("click", () => {
+    document.getElementById("cancelModal").style.display = "none";
+  });
+
+
+  document.getElementById("confirmCancel").addEventListener("click", () => {
+    if (bookingIdToCancel) {
+      fetch(`/user/cancel-booking/${bookingIdToCancel}`, {
+        method: "POST",
+      }).then(() => {
+        window.location.reload(); 
+      });
+    }
+  });
+
+  // Auto-hide success or error message
+  setTimeout(() => {
+    const successMessage = document.getElementById("successMessage");
+    const errorMessage = document.getElementById("errorMessage");
+
+    if (successMessage) {
+      successMessage.style.opacity = "0";
+      setTimeout(() => successMessage.remove(), 500);
+    }
+
+    if (errorMessage) {
+      errorMessage.style.opacity = "0";
+      setTimeout(() => errorMessage.remove(), 500);
+    }
+  }, 5000);
 </script>
 
 <%- include('partials/footer') %>

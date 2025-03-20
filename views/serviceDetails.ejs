@@ -1,0 +1,60 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <h1><%= service.name %></h1>
+<p>Description: <%= service.description %></p>
+<p>Price:Rs<%= service.price %></p>
+
+<form action="/services/book-service/<%= service._id %>" method="POST">
+  <button type="submit" class="book-services-btn">Book Now</button>
+</form>
+
+<a href="/services">Back to Services</a>
+<%- include('partials/footer') %>
+</body>
+</html> -->
+
+<h1><%= service.name %></h1>
+<p><%= service.description %></p>
+
+<% if (service.isDurationBased) { %>
+  <label for="duration">Choose Duration:</label>
+  <select id="duration">
+    <% service.durationOptions.forEach(option => { %>
+      <option value="<%= option.multiplier %>">
+        <%= option.duration %> - $<%= service.basePrice * option.multiplier %>
+      </option>
+    <% }) %>
+  </select>
+
+  <p>Total Price: <span id="totalPrice">$<%= service.basePrice %></span></p>
+
+  <form action="/services/book-service/<%= service._id %>" method="POST">
+    <input type="hidden" name="selectedDuration" id="selectedDuration">
+    <input type="hidden" name="totalPrice" id="finalPrice">
+    <button type="submit" class="book-btn">Book Now</button>
+  </form>
+
+  <script>
+    document.getElementById("duration").addEventListener("change", function() {
+      let basePrice = <%= service.basePrice %>;
+      let multiplier = this.value;
+      let totalPrice = basePrice * multiplier;
+
+      document.getElementById("totalPrice").innerText = "$" + totalPrice;
+      document.getElementById("selectedDuration").value = this.options[this.selectedIndex].text;
+      document.getElementById("finalPrice").value = totalPrice;
+    });
+  </script>
+<% } else { %>
+  <p>Price: $<%= service.basePrice %></p>
+  <form action="/services/book-service/<%= service._id %>" method="POST">
+    <button type="submit" class="book-btn">Book Now</button>
+  </form>
+<% } %>

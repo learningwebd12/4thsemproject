@@ -6,7 +6,6 @@ const connectDB = require("./config/db");
 
 const app = express();
 
-// Connect to MongoDB
 connectDB();
 
 // Session Middleware
@@ -18,22 +17,19 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 24 * 60 * 60 * 1000,
-      secure: false, // Set true in production if using HTTPS
+      secure: false,
     },
   })
 );
 
-// Flash Messages Middleware
 app.use(flash());
 
-// Middleware to make flash messages available in views
 app.use((req, res, next) => {
   res.locals.successMessage = req.flash("success");
   res.locals.errorMessage = req.flash("error");
   next();
 });
 
-// Middleware to Check User or Admin Authentication
 app.use((req, res, next) => {
   res.locals.userLoggedIn = !!req.session.user;
   res.locals.adminLoggedIn = !!req.session.admin;
@@ -47,7 +43,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Set View Engine & Public Folder
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -60,6 +55,7 @@ const serviceRoutes = require("./routes/services");
 const contactRouter = require("./routes/contact");
 const aboutRoutes = require("./routes/about");
 const userRoutes = require("./routes/user");
+const serviceDetailsRoutes = require("./routes/serviceDetails");
 
 // Use Routes
 app.use("/auth", authRoutes);
@@ -69,6 +65,7 @@ app.use("/services", serviceRoutes);
 app.use("/contact", contactRouter);
 app.use("/", aboutRoutes);
 app.use("/user", userRoutes);
+app.use("/admin", serviceDetailsRoutes);
 
 // Home Route
 app.get("/", (req, res) => {

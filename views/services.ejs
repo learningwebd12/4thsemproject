@@ -16,13 +16,16 @@
       color: #155724;
       border: 1px solid #c3e6cb;
       position: absolute;
-      top: 4vw;
+      top: 8vw;
       right: 3vw;
+      z-index: 11;
+      font-family: minigap;
     }
     .alert-danger {
       background-color: #f8d7da;
       color: #721c24;
       border: 1px solid #f5c6cb;
+      font-family: minigap;
     }
   </style>
 </head>
@@ -55,18 +58,18 @@
    </div>
   <h1 class="available-services-text">Available Services</h1>
 
-  <div class="all-services">
-    <% services.forEach(service => { %> 
-      <div class="service-list">
-        <h2 class="services-name"><%= service.name %></h2>
-        <p class="services-description"><%= service.description %></p>
-        <p class="services-price">Price: $<%= service.price %></p>
-        <form action="/services/book-service/<%= service._id %>" method="POST">
-          <button type="submit" class="book-services-btn">Book Now</button>
-        </form>
-      </div>
-    <% }) %>
+    <div class="all-services">
+      <% services.forEach(service => { %> 
+        <div class="service-list">
+          <h2 class="services-name"><%= service.name %></h2>
+          <p class="services-description"><%= service.description %></p>
+          <!-- <p class="services-price">Price: $<%= service.price %></p> -->
+          <a href="/services/<%= service._id %>" class="learn-more-btn">Learn More</a>
+        </div>
+      <% }) %>
     </div>
+    
+
 
     <div class="question-and-answer">
       <div class="question-images">

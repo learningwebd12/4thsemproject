@@ -1,0 +1,12 @@
+<div class="all-services">
+    <% services.forEach(service => { %> 
+      <div class="service-list">
+        <h2 class="services-name"><%= service.name %></h2>
+        <p class="services-description"><%= service.description %></p>
+        <p class="services-price">Price: $<%= service.price %></p>
+        <form action="/services/book-service/<%= service._id %>" method="POST">
+          <button type="submit" class="book-services-btn">Book Now</button>
+        </form>
+      </div>
+    <% }) %>
+    </div>
